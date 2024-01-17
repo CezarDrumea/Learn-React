@@ -1,24 +1,24 @@
 import { useState } from 'react';
 
-const initRange = 1;
+const initStep = 1;
 const initCount = 0;
 
 const App = () => {
-  const [range, setRange] = useState(initRange);
+  const [step, setStep] = useState(initStep);
   const [count, setCount] = useState(initCount);
 
-  const isInitState = range !== initRange || count !== initCount;
+  const isInitState = step !== initStep || count !== initCount;
 
-  const date = new Date('18 january 2024');
+  const date = new Date();
   date.setDate(date.getDate() + count);
 
-  const handleRange = (e) => setRange(Number(e.target.value));
+  const handleRange = (e) => setStep(Number(e.target.value));
   const handleCount = (e) => setCount(Number(e.target.value));
-  const handleIncrement = () => setCount((curCount) => curCount + range);
-  const handleDecrement = () => setCount((curCount) => curCount - range);
+  const handleIncrement = () => setCount((curCount) => curCount + step);
+  const handleDecrement = () => setCount((curCount) => curCount - step);
 
   const handleReset = () => {
-    setRange(initRange);
+    setStep(initStep);
     setCount(initCount);
   };
 
@@ -26,18 +26,25 @@ const App = () => {
     <>
       <input
         type='range'
-        min={initRange}
+        min={initStep}
         max={10}
         step={1}
-        value={range}
+        value={step}
         onChange={handleRange}
       />
-      <span>{range}</span>
+      <span>{step}</span>
       <br />
       <button onClick={handleDecrement}>-</button>
       <input type='text' value={count} onChange={handleCount} />
       <button onClick={handleIncrement}>+</button>
-      <p>{date.toDateString()}</p>
+      <p>
+        {count === 0
+          ? 'Today is '
+          : count > 0
+          ? `${count} days from Today is `
+          : `${Math.abs(count)} days ago was `}
+        {date.toDateString()}
+      </p>
 
       {isInitState && <button onClick={handleReset}>reset</button>}
     </>
