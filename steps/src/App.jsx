@@ -7,11 +7,13 @@ const messages = [
   'Invest your new income 🤑',
 ];
 
+const buttonStyle = { backgroundColor: '#7950f2', color: '#fff' };
+
 const App = () => {
   return (
     <>
       <Steps />
-      <Steps />
+      {/* <Steps /> */}
     </>
   );
 };
@@ -19,8 +21,6 @@ const App = () => {
 const Steps = () => {
   const [isOpen, setIsOpen] = useState(true);
   const [step, setStep] = useState(1);
-
-  const buttonStyle = { backgroundColor: '#7950f2', color: '#fff' };
 
   const handlePrevious = () => {
     if (step > 1) setStep((curState) => curState - 1);
@@ -45,19 +45,34 @@ const Steps = () => {
             <div className={step >= 2 ? 'active' : ''}>2</div>
             <div className={step === 3 ? 'active' : ''}>3</div>
           </div>
-          <p className='message'>
-            Step {step}: {messages[step - 1]}
-          </p>
+          <Message step={step}>{messages[step - 1]}</Message>
           <div className='buttons'>
-            <button style={buttonStyle} onClick={handlePrevious}>
-              Previous
-            </button>
-            <button style={buttonStyle} onClick={handleNext}>
-              Next
-            </button>
+            <Button btnStyle={buttonStyle} onClick={handlePrevious}>
+              <span>👈</span> Previous
+            </Button>
+            <Button btnStyle={buttonStyle} onClick={handleNext}>
+              Next <span>👉</span>
+            </Button>
           </div>
         </div>
       )}
+    </div>
+  );
+};
+
+const Button = ({ btnStyle, onClick, children }) => {
+  return (
+    <button style={btnStyle} onClick={onClick}>
+      {children}
+    </button>
+  );
+};
+
+const Message = ({ step, children }) => {
+  return (
+    <div className='message'>
+      <h3>Step {step}</h3>
+      {children}
     </div>
   );
 };
