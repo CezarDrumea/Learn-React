@@ -1,12 +1,12 @@
 import NavBar from './components/NavBar';
-import Logo from './components/Logo';
 import NumResults from './components/NumResults';
 import Search from './components/Search';
 import Main from './components/Main';
 import { useState } from 'react';
-import ListBox from './components/ListBox';
-import WatchedBox from './components/WatchedBox';
+import Box from './components/Box';
 import MoviesList from './components/MoviesList';
+import WatchedSummary from './components/WatchedSummary';
+import WatchedMoviesList from './components/WatchedMoviesList';
 
 const tempMovieData = [
   {
@@ -57,6 +57,7 @@ const tempWatchedData = [
 
 export default function App() {
   const [movies, setMovies] = useState(tempMovieData);
+  const [watched, setWatched] = useState(tempWatchedData);
 
   return (
     <>
@@ -64,11 +65,16 @@ export default function App() {
         <Search />
         <NumResults movies={movies} />
       </NavBar>
+
       <Main>
-        <ListBox>
+        <Box>
           <MoviesList movies={movies} />
-        </ListBox>
-        <WatchedBox watchedData={tempWatchedData} />
+        </Box>
+
+        <Box>
+          <WatchedSummary watched={watched} />
+          <WatchedMoviesList watched={watched} />
+        </Box>
       </Main>
     </>
   );
