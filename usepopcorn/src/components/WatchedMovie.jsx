@@ -6,9 +6,10 @@ const WatchedMovie = ({
   userRating,
   runtime,
   onDeleteWatched,
+  onSelectMovie,
 }) => {
   return (
-    <li>
+    <li onClick={onSelectMovie(imdbID)}>
       <img src={poster} alt={`${title} poster`} />
       <h3>{title}</h3>
       <div>

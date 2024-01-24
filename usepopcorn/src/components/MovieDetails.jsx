@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import StarRating from './StarRating';
 import { API_KEY } from '../assets/utils';
 import Loader from './Loader';
+import { useKey } from '../hooks/useKey';
 
 const MovieDetails = ({ selectedID, onCloseMovie, onAddWatched, watched }) => {
   const [movie, setMovie] = useState({});
@@ -23,7 +24,17 @@ const MovieDetails = ({ selectedID, onCloseMovie, onAddWatched, watched }) => {
     Genre: genre,
   } = movie;
 
-  const handleAdd = () => {
+  // Experiment
+
+  const countRef = useRef(0);
+
+  useEffect(() => {
+    if (countRef) countRef.current++;
+  }, [userRating]);
+
+  // End of Experiment
+
+  const handleAddWatched = () => {
     const newWatchedMovie = {
       imdbID: selectedID,
       title,
@@ -32,27 +43,23 @@ const MovieDetails = ({ selectedID, onCloseMovie, onAddWatched, watched }) => {
       imdbRating: Number(imdbRating),
       runtime: parseInt(runtime),
       userRating,
+      countRef: countRef.current, // Experiment
     };
 
     if (prevWatchedMovie)
-      onAddWatched(
-        watched.map((watchedMovie) =>
+      onAddWatched((watchedMovies) =>
+        watchedMovies.map((watchedMovie) =>
           watchedMovie.imdbID === selectedID
             ? { ...prevWatchedMovie, userRating }
             : watchedMovie
         )
       );
     else onAddWatched((watched) => [...watched, newWatchedMovie]);
+
     onCloseMovie();
   };
 
-  useEffect(() => {
-    const callback = (e) => e.code === 'Escape' && onCloseMovie();
-
-    document.addEventListener('keydown', callback);
-
-    return () => document.removeEventListener('keydown', callback);
-  }, [onCloseMovie]);
+  useKey('Escape', onCloseMovie);
 
   useEffect(() => {
     const getMovieDetails = async () => {
@@ -113,7 +120,7 @@ const MovieDetails = ({ selectedID, onCloseMovie, onAddWatched, watched }) => {
               />
 
               {userRating > 0 && (
-                <button className='btn-add' onClick={handleAdd}>
+                <button className='btn-add' onClick={handleAddWatched}>
                   {prevWatchedMovie ? 'Update rating' : '+ Add to list'}
                 </button>
               )}
