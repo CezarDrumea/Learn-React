@@ -1,7 +1,7 @@
-import Spinner from './Spinner';
+import Spinner from '../Spinner';
 import styles from './CountryList.module.css';
-import Message from './Message';
-import CountryItem from './CountryItem';
+import Message from '../Message';
+import CountryItem from '../CountryItem';
 
 const CountryList = ({ cities, isLoading }) => {
   if (isLoading) return <Spinner />;

@@ -1,5 +1,5 @@
 import styles from './City.module.css';
-import { formatDate } from '../utilities/format';
+import { formatDate } from '../../utilities/format';
 
 function City() {
   // TEMP DATA
@@ -44,9 +44,9 @@ function City() {
         </a>
       </div>
 
-      <div>
+      {/* <div>
         <ButtonBack />
-      </div>
+      </div> */}
     </div>
   );
 }

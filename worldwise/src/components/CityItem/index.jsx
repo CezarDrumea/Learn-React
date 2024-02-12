@@ -1,4 +1,4 @@
-import { formatDate } from '../utilities/format';
+import { formatDate } from '../../utilities/format';
 import styles from './CityItem.module.css';
 
 const CityItem = ({ emoji, cityName, date }) => {
