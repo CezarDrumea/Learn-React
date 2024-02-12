@@ -19,12 +19,11 @@ const CountryList = ({ cities, isLoading }) => {
       ])
     ).values(),
   ];
-  console.log(countries);
 
   return (
     <ul className={styles.countryList}>
       {countries.map((country) => (
-        <CountryItem {...country} key={country.id} />
+        <CountryItem {...country} key={country.country} />
       ))}
     </ul>
   );
